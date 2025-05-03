@@ -64,3 +64,46 @@ src/
 │   └── +layout.svelte
 │
 └── database.db
+
+```
+
+---
+
+## Technologies Used
+
+- SvelteKit 
+- SQLite 
+- TypeScript
+- Svelte stores and props for component communication
+
+---
+
+## API Endpoints
+
+### External API
+- `GET /api/quote` – Fetches a motivational quote from Quotable API
+
+### Internal APIs
+
+| Endpoint                  | Method | Description                     |
+|---------------------------|--------|---------------------------------|
+| `/api/tasks`              | GET    | Fetch all tasks                 |
+| `/api/tasks/add`          | POST   | Add a new task                  |
+| `/api/tasks/[id]`         | GET    | Fetch task by ID                |
+| `/api/tasks/[id]`         | PATCH  | Update a task by ID             |
+| `/api/tasks/[id]`         | DELETE | Delete a task by ID             |
+
+---
+
+## Data Model
+
+All tasks are stored in a SQLite database. Each task includes the following fields:
+
+- `id`: number 
+- `title`: string 
+- `description`: string 
+- `dueDate`: string (YYYY-MM-DD format)
+- `priority`: string (low, medium, high)
+- `status`: string (incomplete or complete)
+
+

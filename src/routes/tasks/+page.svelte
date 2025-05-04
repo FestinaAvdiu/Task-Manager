@@ -31,7 +31,7 @@
 		}
 	};
 
-	// Toggle completion status with optimistic update
+	// Toggle completion status
 	const toggleTaskStatus = async (taskId: number, currentStatus: string) => {
 		tasks = tasks.map(task =>
 			task.id === taskId

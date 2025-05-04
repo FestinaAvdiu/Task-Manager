@@ -53,14 +53,14 @@ src/
 │   │       └── [id]/
 │   │           └── +server.ts
 │   ├── tasks/
-│   │   ├── +page.svelte
+│   │   ├── +page.svelte          ## TASKS PAGE
 │   │   ├── add/
-│   │   │   └── +page.svelte
+│   │   │   └── +page.svelte      ## ADD TASKS PAGE
 │   │   └── [id]/
-│   │       ├── +page.svelte
+│   │       ├── +page.svelte      ## TASKS DETAILS PAGE
 │   │       └── edit/
-│   │           └── +page.svelte
-│   ├── +page.svelte
+│   │           └── +page.svelte  ## EDIT TASKS PAGE
+│   ├── +page.svelte     ## HOMEPAGE
 │   └── +layout.svelte
 │
 └── database.db

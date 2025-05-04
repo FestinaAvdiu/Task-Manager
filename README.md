@@ -80,18 +80,18 @@ src/
 
 ## API Endpoints
 
-### External API
-- `GET /api/quote` – Fetches a motivational quote from Quotable API
+### Internal & External APIs
 
-### Internal APIs
+| **Endpoint**                   | **HTTP Method** | **Description**                                                                                          |
+|--------------------------------|-----------------|----------------------------------------------------------------------------------------------------------|
+| `/api/tasks`                   | `GET`           | Fetches all tasks from the database. Returns a list of tasks.                                              |
+| `/api/tasks`                   | `PATCH`         | Updates the status of a task (e.g., toggling between "done" and "todo"). Takes task ID via query params. |
+| `/api/tasks/[id]`              | `GET`           | Fetches a single task based on its ID. Returns details of a specific task.                                 |
+| `/api/tasks/[id]`              | `DELETE`        | Deletes a specific task based on its ID. Returns success or error status based on deletion success.        |
+| `/api/tasks/[id]`              | `PATCH`         | Updates a specific task by ID with the provided data (e.g., title, description, priority, status).         |
+| `/api/tasks/add`               | `POST`          | Creates a new task by inserting it into the database with provided data (title, description, etc.).         |
+| `/api/quote`                   | `GET`           | Fetches a random motivational quote and its author from the Quotable API.                                  |
 
-| Endpoint                  | Method | Description                     |
-|---------------------------|--------|---------------------------------|
-| `/api/tasks`              | GET    | Fetch all tasks                 |
-| `/api/tasks/add`          | POST   | Add a new task                  |
-| `/api/tasks/[id]`         | GET    | Fetch task by ID                |
-| `/api/tasks/[id]`         | PATCH  | Update a task by ID             |
-| `/api/tasks/[id]`         | DELETE | Delete a task by ID             |
 
 ---
 

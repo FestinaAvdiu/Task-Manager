@@ -10,6 +10,15 @@ The purpose of this project is to build a complete web application using the Sve
 
 ---
 
+## Implementation
+
+The application is built using **SvelteKit**, **SQLite**, and **TypeScript**. The project follows a structured approach to separate concerns:
+1. **Frontend**: The UI is built using Svelte components, where tasks are displayed in a categorized system. Users can add, update, and delete tasks. 
+2. **Backend**: The backend handles the task management logic, including CRUD operations, through API routes. The database (SQLite) stores tasks, and the app interacts with it via API calls.
+3. **External API**: The motivational quote feature fetches quotes from an external API (Quotable API).
+
+---
+
 ## Features
 
 - View motivational quotes on the homepage (fetched from an external API)
@@ -30,40 +39,46 @@ The purpose of this project is to build a complete web application using the Sve
 
 ```text
 src/
-├── lib/
-│   ├── components/
-│   │   ├── Footer.svelte
-│   │   ├── Navbar.svelte
-│   │   ├── NotificationBadge.svelte
-│   │   ├── PriorityBadge.svelte
-│   │   ├── StatusBadge.svelte
-│   │   ├── TaskCard.svelte
-│   │   ├── TaskEdit.svelte
-│   │   └── TaskForm.svelte
-│   └── db.ts
+├── lib/                              
+│   ├── components/                  
+│   │   ├── Footer.svelte             ## Page footer
+│   │   ├── Navbar.svelte             ## Navigation bar
+│   │   ├── NotificationBadge.svelte  ## Shows number of incomplete tasks
+│   │   ├── PriorityBadge.svelte      ## Visual indicator of task priority
+│   │   ├── StatusBadge.svelte        ## Shows if task is complete/incomplete
+│   │   ├── TaskCard.svelte           ## Card layout for individual task display
+│   │   ├── TaskEdit.svelte           ## Task edit form UI
+│   │   └── TaskForm.svelte           ## Task creation form UI
+│   └── db.ts                         ## Initializes SQLite DB, creates schema, seeds default tasks
 │
-├── routes/
-│   ├── api/
+├── routes/                           
+│   ├── api/                          
 │   │   ├── quote/
-│   │   │   └── +server.ts
+│   │   │   └── +server.ts            ## External API Endpoint (quote fetching)
 │   │   └── tasks/
-│   │       ├── +server.ts
+│   │       ├── +server.ts            ## Handles GET all / PATCH status of tasks
 │   │       ├── add/
-│   │       │   └── +server.ts
-│   │       └── [id]/
-│   │           └── +server.ts
-│   ├── tasks/
-│   │   ├── +page.svelte            ## TASKS PAGE
+│   │       │   └── +server.ts        ## Handles POST for new tasks
+│   │       └── [id]/                 
+│   │           └── +server.ts        ## Handles GET / PATCH / DELETE by task ID
+│   |
+│   ├── tasks/                        
+│   │   ├── +page.svelte              ## TASKS PAGE – shows tasks by category
 │   │   ├── add/
-│   │   │   └── +page.svelte        ## ADD TASKS PAGE
+│   │   │   └── +page.svelte          ## ADD TASKS PAGE – form to create a new task
 │   │   └── [id]/
-│   │       ├── +page.svelte        ## TASKS DETAILS PAGE
+│   │       ├── +page.svelte          ## TASK DETAILS PAGE – view task info
 │   │       └── edit/
-│   │           └── +page.svelte    ## EDIT TASKS PAGE
-│   ├── +page.svelte                ## HOMEPAGE
-│   └── +layout.svelte
+│   │           └── +page.svelte      ## EDIT TASKS PAGE – edit existing task
+│   |
+│   ├── +page.svelte                  ## HOMEPAGE – shows motivational quote
+│   └── +layout.svelte                ## Layout wrapper for pages
 │
-└── database.db
+├── app.d.ts                          
+├── app.html                          
+└── database.db                       ## SQLite Database File
+
+
 
 ```
 
@@ -82,15 +97,16 @@ src/
 
 ### Internal & External APIs
 
-| **Endpoint**                   | **HTTP Method** | **Description**                                                                                          |
-|--------------------------------|-----------------|----------------------------------------------------------------------------------------------------------|
-| `/api/tasks`                   | `GET`           | Fetches all tasks from the database. Returns a list of tasks.                                              |
-| `/api/tasks`                   | `PATCH`         | Updates the status of a task (e.g., toggling between "done" and "todo"). Takes task ID via query params. |
-| `/api/tasks/[id]`              | `GET`           | Fetches a single task based on its ID. Returns details of a specific task.                                 |
-| `/api/tasks/[id]`              | `DELETE`        | Deletes a specific task based on its ID. Returns success or error status based on deletion success.        |
-| `/api/tasks/[id]`              | `PATCH`         | Updates a specific task by ID with the provided data (e.g., title, description, priority, status).         |
-| `/api/tasks/add`               | `POST`          | Creates a new task by inserting it into the database with provided data (title, description, etc.).         |
-| `/api/quote`                   | `GET`           | Fetches a random motivational quote and its author from the Quotable API.                                  |
+| Endpoint                                | Method  | Description                                    |
+|-----------------------------------------|---------|------------------------------------------------|
+| `/api/tasks`                           | GET     | Fetch all tasks.                               |
+| `/api/tasks`                           | PATCH   | Update task status (mark as done or to-do).    |
+| `/api/tasks/[id]`                      | GET     | Fetch task details by ID.                     |
+| `/api/tasks/[id]`                      | DELETE  | Delete task by ID.                            |
+| `/api/tasks/[id]`                      | PATCH   | Update task details by ID.                    |
+| `/api/tasks/add`                       | POST    | Create a new task.                            |
+| `/api/quote`                           | GET     | Fetch a random motivational quote from Quotable API            |
+
 
 
 ---
@@ -99,11 +115,41 @@ src/
 
 All tasks are stored in a SQLite database. Each task includes the following fields:
 
-- `id`: number 
-- `title`: string 
-- `description`: string 
-- `dueDate`: string (YYYY-MM-DD format)
-- `priority`: string (low, medium, high)
-- `status`: string (incomplete or complete)
+| Field        | Type     | Description                              |
+|--------------|----------|------------------------------------------|
+| `id`         | INTEGER  | Unique task identifier (auto-incremented)|
+| `title`      | TEXT     | Title of the task                        |
+| `description`| TEXT     | Detailed description of the task         |
+| `due_date`   | TEXT     | Due date in `YYYY-MM-DD` format          |
+| `priority`   | TEXT     | Task priority (`low`, `medium`, `high`)  |
+| `status`     | TEXT     | Task status (`todo` or `done`)           |
 
+
+--- 
+
+## Getting Started
+
+### Prerequisites
+
+Make sure you have the following installed:
+
+- Node.js (v18+)
+- npm 
+- SQLite
+
+### Installation
+
+1. **Clone the repository:**
+
+   ```bash
+   git clone https://github.com/FestinaAvdiu/task-manager.git
+   cd task-manager
+3. **Install dependencies:**
+
+   ```bash
+   npm install
+1. **Run the development server:**
+
+   ```bash
+   npm run dev
 

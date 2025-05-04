@@ -6,7 +6,7 @@
 
 ## Purpose of the Project
 
-The purpose of this project is to demonstrate the ability to independently build a complete web application using the SvelteKit framework. This includes working with routes, components, APIs (both internal and external), server-side data storage, and clean UI/UX design.
+The purpose of this project is to build a complete web application using the SvelteKit framework. This includes working with routes, components, APIs (both internal and external), server-side data storage, and clean UI/UX design.
 
 ---
 

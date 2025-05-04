@@ -35,6 +35,16 @@ The application is built using **SvelteKit**, **SQLite**, and **TypeScript**. Th
 
 ---
 
+
+## Technologies Used
+
+- SvelteKit 
+- SQLite 
+- TypeScript
+- Svelte stores and props for component communication
+
+---
+
 ## Project Structure
 
 ```text
@@ -81,16 +91,6 @@ src/
 
 
 ```
-
----
-
-## Technologies Used
-
-- SvelteKit 
-- SQLite 
-- TypeScript
-- Svelte stores and props for component communication
-
 ---
 
 ## API Endpoints
